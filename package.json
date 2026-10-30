@@ -18,7 +18,8 @@
     "preview": "node tools/preview.ts",
     "package": "node tools/package.ts",
     "evals": "node evals/harness/run.ts",
-    "screenshots": "node tools/preview.ts --screenshots"
+    "screenshots": "node tools/preview.ts --screenshots",
+    "version:bump": "node tools/version.ts bump"
   },
   "devDependencies": {
     "@anthropic-ai/sdk": "1.3.0",

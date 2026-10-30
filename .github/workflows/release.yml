@@ -1,0 +1,64 @@
+# Turns a version tag into a GitHub Release with the uploadable zips (docs/change-management.md).
+#   git tag v0.1.2 && git push origin v0.1.2
+# The release holds exactly the bytes that passed the checks below, so what an admin uploads to
+# claude.ai is what was tested.
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write # to create the release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: The tag matches the version, and the changelog covers it
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [ "v$VERSION" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME doesn't match package.json version $VERSION. Run npm run version:bump first."
+            exit 1
+          fi
+          node tools/version.ts notes "$VERSION" > release-notes.md
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+
+      - run: npm run typecheck
+
+      - name: The committed scripts match their source
+        run: |
+          npm run build
+          git diff --exit-code -- skill/
+
+      - run: npm test
+
+      - name: Package and name the zips
+        run: |
+          npm run package -- --all
+          mkdir release
+          for zip in dist/*/sales-proposal-builder.zip; do
+            pack=$(basename "$(dirname "$zip")")
+            cp "$zip" "release/sales-proposal-builder-$pack-v$VERSION.zip"
+          done
+          (cd release && sha256sum -- *.zip > SHA256SUMS)
+          cat release/SHA256SUMS
+
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" release/*.zip release/SHA256SUMS \
+            --title "sales-proposal-builder $GITHUB_REF_NAME" \
+            --notes-file release-notes.md \
+            --verify-tag

@@ -1,0 +1,26 @@
+# Who must approve changes to each part of the skill (docs/change-management.md).
+# GitHub requests these reviewers automatically. With branch protection set to "Require review
+# from Code Owners", a change can't merge without them.
+#
+# In a company, each line names the team that owns that decision, for example:
+#   /packs/*/pricing.json   @acme/sales-ops @acme/finance
+#   /packs/*/terms.md       @acme/legal
+# This is a one-person portfolio repo, so every line names its owner.
+
+# Default: the skill core, tooling, tests and evals (AI platform team).
+*                                   @jSethMano
+
+# What Claude reads and runs: changes need an eval run (see the PR template).
+/skill/sales-proposal-builder/      @jSethMano
+/src/skill/                         @jSethMano
+
+# Company packs: each file has a business owner.
+/packs/*/pricing.json               @jSethMano
+/packs/*/catalog.json               @jSethMano
+/packs/*/terms.md                   @jSethMano
+/packs/*/case-studies.md            @jSethMano
+/packs/*/brand.json                 @jSethMano
+/packs/*/logo.png                   @jSethMano
+
+# How changes are approved and released.
+/.github/                           @jSethMano

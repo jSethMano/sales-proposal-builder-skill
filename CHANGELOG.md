@@ -2,6 +2,19 @@
 
 All notable changes to the `sales-proposal-builder` skill. Versions follow [Semantic Versioning](https://semver.org/). The version lives in `package.json` and `src/skill/lib/version.cts`, and a test keeps them equal.
 
+## [Unreleased]
+
+These changes don't alter the zips.
+
+### Added
+- Change management:
+  - `CODEOWNERS`, and a pull request template;
+  - `release.yml`, which turns a `vX.Y.Z` tag into a GitHub Release with one zip per pack and `SHA256SUMS`;
+  - `evals.yml`, which runs the evals on demand, with the API key in a protected environment;
+  - `npm run version:bump`;
+  - `docs/change-management.md`.
+- The eval harness finds its existing skill by name when it has no local record, so runs in CI add versions instead of creating duplicates.
+
 ## [0.1.1] - 2026-10-30
 
 ### Changed
