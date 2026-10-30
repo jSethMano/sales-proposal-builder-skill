@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "_comment": "Test fixture. Numbers are chosen so each pricing rule can be checked by hand.",
+  "packId": "test-usd",
+  "configured": true,
+  "source": "packaged",
+  "company": { "displayName": "Fixture Co", "legalName": "Fixture Co LLC" },
+  "colors": { "primary": "#336699", "accent": "#CC6633", "text": "#111111", "muted": "#777777" },
+  "fonts": { "heading": "Arial", "body": "Arial" },
+  "logo": "logo.png",
+  "locale": "en-US",
+  "voice": "Plain.",
+  "footer": "Prepared for {client} by {company}.",
+  "signatory": { "name": "Pat Fixture", "title": "Sales Lead" }
+}

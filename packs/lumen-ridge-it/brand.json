@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "_comment": "Fictional demo company. Every name, number and address here is invented.",
+  "packId": "lumen-ridge-it",
+  "configured": true,
+  "source": "packaged",
+  "company": {
+    "displayName": "Lumen Ridge IT",
+    "legalName": "Lumen Ridge IT Services LLC",
+    "website": "lumenridge.example",
+    "email": "sales@lumenridge.example",
+    "phone": "+1 555 0100",
+    "address": "100 Example Street, Springfield"
+  },
+  "colors": {
+    "primary": "#1F3A5F",
+    "accent": "#E07A2E",
+    "text": "#1A1A1A",
+    "muted": "#5A6472"
+  },
+  "fonts": {
+    "heading": "Cambria",
+    "body": "Calibri"
+  },
+  "logo": "logo.png",
+  "locale": "en-US",
+  "voice": "Formal and precise. Short paragraphs. Use the client's own terms and avoid jargon they haven't used. No superlatives and no exclamation marks.",
+  "footer": "Confidential. Prepared for {client} by {company}.",
+  "signatory": {
+    "name": "Jordan Avery",
+    "title": "Head of Sales"
+  }
+}

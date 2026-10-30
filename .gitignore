@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# Eval runs: transcripts and documents stay local; results.jsonl and config.json are committed.
+evals/runs/*/transcripts/
+evals/runs/*/outputs/
+evals/.skills.json
+
+# Local M0 API probe output
+spikes/out/

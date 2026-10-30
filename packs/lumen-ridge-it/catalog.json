@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "sku": "LR-SUPPORT-CORE",
+      "name": "Managed IT Support (Core)",
+      "description": "Service desk and proactive maintenance for every user, during business hours.",
+      "includes": [
+        "Service desk by phone, email and portal, 8am to 6pm local time, Monday to Friday",
+        "Remote support, plus on-site visits when a fix needs them",
+        "Patch management for Windows and macOS",
+        "Endpoint antivirus and health monitoring",
+        "Monthly service report and quarterly review"
+      ],
+      "unit": "user/month",
+      "billing": "monthly",
+      "listPriceMinor": 4500,
+      "volumeTiered": true,
+      "sla": "Priority 1 incidents: response within 1 business hour."
+    },
+    {
+      "sku": "LR-SUPPORT-PLUS",
+      "name": "Managed IT Support (Plus, 24x7)",
+      "description": "Everything in Core, with the service desk available around the clock.",
+      "includes": [
+        "Everything in Managed IT Support (Core)",
+        "24x7 service desk for Priority 1 and Priority 2 incidents",
+        "Named service manager"
+      ],
+      "unit": "user/month",
+      "billing": "monthly",
+      "listPriceMinor": 6900,
+      "volumeTiered": true,
+      "sla": "Priority 1 incidents: response within 30 minutes, 24x7."
+    },
+    {
+      "sku": "LR-M365-BACKUP",
+      "name": "Microsoft 365 Backup",
+      "description": "Daily backup of mailboxes, OneDrive, SharePoint and Teams, kept for one year.",
+      "includes": [
+        "Daily backup of Exchange Online, OneDrive, SharePoint and Teams",
+        "One-year retention",
+        "Restores on request through the service desk"
+      ],
+      "unit": "user/month",
+      "billing": "monthly",
+      "listPriceMinor": 400,
+      "volumeTiered": true
+    },
+    {
+      "sku": "LR-MDR",
+      "name": "Managed Detection and Response",
+      "description": "Endpoint detection and response, monitored by a security operations team.",
+      "includes": [
+        "Endpoint detection and response agent on each device",
+        "24x7 monitoring and triage of alerts",
+        "Containment of confirmed threats, with a written incident report"
+      ],
+      "unit": "device/month",
+      "billing": "monthly",
+      "listPriceMinor": 1200,
+      "volumeTiered": true
+    },
+    {
+      "sku": "LR-NETWORK-SITE",
+      "name": "Managed Network (per site)",
+      "description": "Monitoring and management of a site's firewall, switches and wireless.",
+      "includes": [
+        "Firewall, switch and wireless monitoring",
+        "Firmware updates in agreed maintenance windows",
+        "Configuration backups"
+      ],
+      "unit": "site/month",
+      "billing": "monthly",
+      "listPriceMinor": 35000,
+      "volumeTiered": false,
+      "requires": ["sites"]
+    },
+    {
+      "sku": "LR-M365-MIGRATION",
+      "name": "Microsoft 365 Migration",
+      "description": "Moving mailboxes and files to Microsoft 365, priced per user migrated.",
+      "includes": [
+        "Discovery and migration plan",
+        "Mailbox and file migration, with cutover out of business hours",
+        "End-user guides and day-one floor support"
+      ],
+      "unit": "user",
+      "billing": "one-time",
+      "listPriceMinor": 9500,
+      "volumeTiered": false,
+      "requires": ["mailboxCount", "currentEmailPlatform"]
+    },
+    {
+      "sku": "LR-ONBOARDING",
+      "name": "Onboarding and Documentation",
+      "description": "Taking over support: audit, documentation and handover from the current provider.",
+      "includes": [
+        "Network and device audit",
+        "IT documentation set up in our system",
+        "Handover from the current provider"
+      ],
+      "unit": "project",
+      "billing": "one-time",
+      "listPriceMinor": 250000,
+      "volumeTiered": false
+    }
+  ]
+}

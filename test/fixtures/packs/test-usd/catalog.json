@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    { "sku": "SUPPORT", "name": "Support", "description": "Per-user support.", "includes": ["Helpdesk"], "unit": "user/month", "billing": "monthly", "listPriceMinor": 4500, "volumeTiered": true },
+    { "sku": "SITE", "name": "Site network", "description": "Per-site network.", "includes": ["Firewall"], "unit": "site/month", "billing": "monthly", "listPriceMinor": 35000, "volumeTiered": false },
+    { "sku": "MIGRATION", "name": "Migration", "description": "Per-user migration.", "includes": ["Mailbox move"], "unit": "user", "billing": "one-time", "listPriceMinor": 9500, "volumeTiered": true },
+    { "sku": "SETUP", "name": "Setup", "description": "Fixed-price setup.", "includes": ["Audit"], "unit": "project", "billing": "one-time", "listPriceMinor": 250000, "volumeTiered": false },
+    { "sku": "TINY", "name": "Tiny", "description": "A 0.50 item for rounding tests.", "includes": ["Nothing much"], "unit": "month", "billing": "monthly", "listPriceMinor": 50, "volumeTiered": false }
+  ]
+}

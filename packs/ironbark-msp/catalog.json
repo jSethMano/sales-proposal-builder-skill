@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "sku": "IB-HELPDESK",
+      "name": "Helpdesk and Support",
+      "description": "Our helpdesk looks after your people and their computers during business hours.",
+      "includes": [
+        "Helpdesk by phone, email and chat, 8am to 6pm, Monday to Friday",
+        "Remote fixes, and on-site visits when needed",
+        "Updates and patches for Windows and macOS",
+        "Antivirus and health checks on every computer",
+        "A short report every month"
+      ],
+      "unit": "user/month",
+      "billing": "monthly",
+      "listPriceMinor": 5900,
+      "volumeTiered": true,
+      "sla": "Urgent issues: we respond within 1 business hour."
+    },
+    {
+      "sku": "IB-AFTER-HOURS",
+      "name": "After-hours Support",
+      "description": "Adds evenings, weekends and public holidays to Helpdesk and Support.",
+      "includes": [
+        "Urgent support outside business hours, 365 days a year",
+        "On-call engineer for outages"
+      ],
+      "unit": "user/month",
+      "billing": "monthly",
+      "listPriceMinor": 1500,
+      "volumeTiered": true,
+      "sla": "Urgent after-hours issues: we respond within 1 hour."
+    },
+    {
+      "sku": "IB-DEVICES",
+      "name": "Device Management",
+      "description": "We set up, secure and track every laptop and phone through Microsoft Intune.",
+      "includes": [
+        "New devices set up ready to use",
+        "Security settings applied and kept up to date",
+        "Lost or stolen devices locked and wiped"
+      ],
+      "unit": "device/month",
+      "billing": "monthly",
+      "listPriceMinor": 900,
+      "volumeTiered": true
+    },
+    {
+      "sku": "IB-BACKUP",
+      "name": "Cloud Backup",
+      "description": "Daily backups of email, OneDrive, SharePoint and Teams.",
+      "includes": [
+        "Daily backups kept for 12 months",
+        "Restores on request"
+      ],
+      "unit": "user/month",
+      "billing": "monthly",
+      "listPriceMinor": 500,
+      "volumeTiered": true
+    },
+    {
+      "sku": "IB-M365-MOVE",
+      "name": "Move to Microsoft 365",
+      "description": "We move your email and files to Microsoft 365, priced per person.",
+      "includes": [
+        "A plan agreed with you before anything moves",
+        "Email and files moved over a weekend",
+        "Quick-start guides and a person on site on day one"
+      ],
+      "unit": "user",
+      "billing": "one-time",
+      "listPriceMinor": 12000,
+      "volumeTiered": false,
+      "requires": ["mailboxCount", "currentEmailPlatform"]
+    },
+    {
+      "sku": "IB-CYBER-UPLIFT",
+      "name": "Cyber Security Uplift",
+      "description": "A fixed-price project to bring your security settings up to a solid baseline.",
+      "includes": [
+        "Security review of accounts, devices and email",
+        "Multi-factor sign-in for everyone",
+        "Fixes for what the review finds, and a plain-English report"
+      ],
+      "unit": "project",
+      "billing": "one-time",
+      "listPriceMinor": 1200000,
+      "volumeTiered": false
+    },
+    {
+      "sku": "IB-ONBOARDING",
+      "name": "Onboarding",
+      "description": "Getting to know your setup and taking over from your current provider.",
+      "includes": [
+        "Audit of computers, accounts and network",
+        "Documentation of how everything is set up",
+        "Handover from your current provider"
+      ],
+      "unit": "project",
+      "billing": "one-time",
+      "listPriceMinor": 180000,
+      "volumeTiered": false
+    }
+  ]
+}

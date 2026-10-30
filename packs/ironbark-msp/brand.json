@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "_comment": "Fictional demo company. Every name, number and address here is invented; 02 5550 xxxx is reserved for fiction in Australia.",
+  "packId": "ironbark-msp",
+  "configured": true,
+  "source": "packaged",
+  "company": {
+    "displayName": "Ironbark Managed Services",
+    "legalName": "Ironbark Managed Services Pty Ltd",
+    "website": "ironbark.example",
+    "email": "hello@ironbark.example",
+    "phone": "+61 2 5550 0123",
+    "address": "Level 3, 12 Sample Lane, Exampleton NSW"
+  },
+  "colors": {
+    "primary": "#2F5D3A",
+    "accent": "#D8C3A5",
+    "text": "#1C1C1C",
+    "muted": "#5F6B66"
+  },
+  "fonts": {
+    "heading": "Arial",
+    "body": "Arial"
+  },
+  "logo": "logo.png",
+  "locale": "en-AU",
+  "voice": "Plain-spoken and friendly. Short sentences. Say what we'll do, when, and what it costs. No buzzwords, no hype.",
+  "footer": "Prepared for {client} by {company}. Commercial in confidence.",
+  "signatory": {
+    "name": "Riley Tan",
+    "title": "Client Partner"
+  }
+}

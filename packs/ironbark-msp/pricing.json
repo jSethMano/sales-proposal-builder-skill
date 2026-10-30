@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "currency": "AUD",
+  "minorUnits": 2,
+  "combinationRule": "compound:volume>term>extra",
+  "_rule": "Discounts compound: volume first, then term (monthly items only), then any extra discount. Each step rounds half-up to the cent. Only the extra discount counts toward the approval limit.",
+  "volumeTiers": [
+    { "minQty": 1, "bps": 0 },
+    { "minQty": 20, "bps": 250 },
+    { "minQty": 50, "bps": 600 }
+  ],
+  "termDiscounts": [
+    { "months": 12, "bps": 0 },
+    { "months": 24, "bps": 400 },
+    { "months": 36, "bps": 800 }
+  ],
+  "approval": { "maxExtraDiscountBps": 1500, "approver": "Operations Director" },
+  "validityDays": 21,
+  "taxNote": "Prices exclude GST. GST is added to every invoice."
+}

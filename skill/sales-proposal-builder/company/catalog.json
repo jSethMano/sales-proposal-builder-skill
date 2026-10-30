@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "_comment": "No catalog: the salesperson supplies each line item and price, and the document labels those prices as supplied.",
+  "items": []
+}

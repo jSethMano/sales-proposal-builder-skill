@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "_comment": "No company pricing policy. The quote sets the currency; there are no volume or term discounts and no approval limit.",
+  "currency": null,
+  "minorUnits": null,
+  "combinationRule": "compound:volume>term>extra",
+  "volumeTiers": [{ "minQty": 1, "bps": 0 }],
+  "termDiscounts": [],
+  "approval": null,
+  "validityDays": 30,
+  "taxNote": "Prices exclude applicable taxes unless stated otherwise."
+}

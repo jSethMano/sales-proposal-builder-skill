@@ -1,0 +1,19 @@
+{
+  // Type-checks tests, tools, spikes and the eval harness. Node 22.18+ runs these .ts files
+  // directly by stripping types, so nothing is emitted and only erasable syntax is allowed.
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "types": ["node"],
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true
+  },
+  "include": ["test/**/*.ts", "tools/**/*.ts", "spikes/**/*.ts", "evals/**/*.ts"]
+}

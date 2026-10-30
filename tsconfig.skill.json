@@ -1,0 +1,23 @@
+{
+  // Compiles the skill's scripts: src/skill/**/*.cts → skill/sales-proposal-builder/scripts/**/*.cjs.
+  // The output is committed and shipped in the zip, so it stays readable: comments kept, no minifying.
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    // ES2022 runs on Node 16.11+; M0 confirms the sandbox's Node version.
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "types": ["node"],
+    "rootDir": "src/skill",
+    "outDir": "skill/sales-proposal-builder/scripts",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "removeComments": false,
+    "declaration": false,
+    "sourceMap": false,
+    "newLine": "lf",
+    "skipLibCheck": true
+  },
+  "include": ["src/skill/**/*.cts"]
+}

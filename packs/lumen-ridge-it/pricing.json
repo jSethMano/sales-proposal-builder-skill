@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "currency": "USD",
+  "minorUnits": 2,
+  "combinationRule": "compound:volume>term>extra",
+  "_rule": "Discounts compound: volume first, then term (monthly items only), then any extra discount. Each step rounds half-up to the cent. Only the extra discount counts toward the approval limit.",
+  "volumeTiers": [
+    { "minQty": 1, "bps": 0 },
+    { "minQty": 25, "bps": 300 },
+    { "minQty": 50, "bps": 500 },
+    { "minQty": 100, "bps": 800 }
+  ],
+  "termDiscounts": [
+    { "months": 12, "bps": 0 },
+    { "months": 24, "bps": 500 },
+    { "months": 36, "bps": 1000 }
+  ],
+  "approval": { "maxExtraDiscountBps": 1500, "approver": "Sales Director" },
+  "validityDays": 30,
+  "taxNote": "Prices exclude sales tax, which is added at the applicable rate."
+}

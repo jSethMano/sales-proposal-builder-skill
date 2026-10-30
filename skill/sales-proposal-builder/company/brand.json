@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "_comment": "The neutral pack. configured: false starts unconfigured mode: Claude asks for the company's name, color, logo, currency and signatory, then runs init-pack.cjs. Packaging replaces this folder with a company's pack.",
+  "packId": "neutral",
+  "configured": false,
+  "source": "packaged",
+  "company": {
+    "displayName": "Your Company",
+    "legalName": "Your Company"
+  },
+  "colors": {
+    "primary": "#4B5563",
+    "accent": "#9CA3AF",
+    "text": "#111827",
+    "muted": "#6B7280"
+  },
+  "fonts": {
+    "heading": "Arial",
+    "body": "Arial"
+  },
+  "logo": null,
+  "locale": "en-US",
+  "voice": "Clear, plain and professional. Short paragraphs. Use the client's own terms.",
+  "footer": "Prepared for {client} by {company}.",
+  "signatory": {
+    "name": "Your Name",
+    "title": "Your Title"
+  }
+}
