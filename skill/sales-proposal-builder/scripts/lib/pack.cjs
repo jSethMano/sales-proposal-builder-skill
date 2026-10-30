@@ -14,6 +14,7 @@ const case_studies_cjs_1 = require("./case-studies.cjs");
 const check_cjs_1 = require("./check.cjs");
 const cli_cjs_1 = require("./cli.cjs");
 const image_cjs_1 = require("./image.cjs");
+const markdown_cjs_1 = require("./markdown.cjs");
 const money_cjs_1 = require("./money.cjs");
 /**
  * Fonts that ship with Word and have a metric-compatible substitute in LibreOffice (Liberation,
@@ -72,6 +73,9 @@ function loadPack(dir) {
     const terms = readPackText(abs, "terms.md", problems);
     if (terms !== undefined && terms.trim() === "") {
         problems.add("E_PACK_TERMS", "terms.md", "terms.md is empty.", "Add the company's standard terms; they are rendered verbatim.");
+    }
+    for (const issue of terms === undefined ? [] : (0, markdown_cjs_1.parseMarkdown)(terms).issues) {
+        problems.add("E_PACK_TERMS", `terms.md:${issue.line}`, issue.message, issue.hint);
     }
     const logo = brand?.logo ? checkLogo(abs, brand, problems) : null;
     if (brand)

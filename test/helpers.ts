@@ -115,3 +115,57 @@ export function pricing(quote: unknown, pack: string = FIXTURE_PACK): PricingOut
   if (r.code !== 0) throw new Error(`price.cjs failed: ${JSON.stringify(r.json, null, 2)}`);
   return r.json.pricing as PricingOutput;
 }
+
+interface DemoBrand {
+  packId: string;
+  company: Record<string, string>;
+  colors: Record<string, string>;
+}
+
+/** Every string that identifies a demo pack: names, contact details, colors, SKUs, approver. */
+export function identifyingStrings(packDir: string): string[] {
+  const brand = readJson<DemoBrand>(join(packDir, "brand.json"));
+  const catalog = readJson<{ items: { sku: string; name: string }[] }>(join(packDir, "catalog.json"));
+  const pricing = readJson<{ approval: { approver: string } | null }>(join(packDir, "pricing.json"));
+  const strings = [
+    brand.packId,
+    ...Object.values(brand.company),
+    // Colors appear with or without "#", in either case.
+    ...Object.values(brand.colors).map((hex) => hex.replace("#", "")),
+    ...catalog.items.map((i) => i.sku),
+  ];
+  // Only approver roles specific enough to identify the pack; "Sales Director" is a generic title.
+  if (pricing.approval && pricing.approval.approver !== "Sales Director") strings.push(pricing.approval.approver);
+  return strings;
+}
+
+export interface BuiltFixture {
+  dir: string;
+  out: string;
+  result: ScriptResult;
+  pricing: PricingOutput;
+}
+
+/**
+ * Prices a proposal fixture (test/fixtures/proposals/<name>), points the proposal at that pricing,
+ * applies any edits, and runs build-docx.cjs into a temp folder.
+ */
+export function buildFixture(
+  name: string,
+  pack: string,
+  edits: { quote?: (q: Record<string, any>) => void; proposal?: (p: Record<string, any>) => void } = {},
+): BuiltFixture {
+  const fixture = join(ROOT, "test/fixtures/proposals", name);
+  const dir = tempDir();
+  const quote = readJson<Record<string, any>>(join(fixture, "quote.json"));
+  edits.quote?.(quote);
+  const pricingFile = join(dir, "pricing.json");
+  const priced = run("price.cjs", [writeJson(dir, "quote.json", quote), "--pack", pack, "--out", pricingFile]);
+  if (priced.code !== 0) throw new Error(`price.cjs failed: ${JSON.stringify(priced.json, null, 2)}`);
+  const proposal = readJson<Record<string, any>>(join(fixture, "proposal.json"));
+  proposal.pricingRef = priced.json.pricingRef;
+  edits.proposal?.(proposal);
+  const out = join(dir, "proposal.docx");
+  const result = run("build-docx.cjs", [writeJson(dir, "proposal.json", proposal), pricingFile, out, "--pack", pack]);
+  return { dir, out, result, pricing: readJson<PricingOutput>(pricingFile) };
+}

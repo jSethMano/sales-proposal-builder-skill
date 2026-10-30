@@ -1,0 +1,46 @@
+# Tests the skill and builds the uploadable zips on every push and pull request (design §14).
+# Evals don't run here: they call the Claude API and cost money, so they run on demand (FR-24).
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          # 22.18+ runs the TypeScript tests and tools directly (type stripping).
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run typecheck
+
+      - name: The committed scripts match their source
+        # The skill ships compiled .cjs files, which are committed so reviewers see what Claude runs.
+        # Rebuilding must not change them; if it does, someone edited a .cts without running the build.
+        run: |
+          npm run build
+          git diff --exit-code -- skill/
+
+      - run: npm test
+
+      - name: Package the zips
+        run: |
+          npm run package -- --all
+          echo "VERSION=$(node -p "require('./package.json').version")" >> "$GITHUB_ENV"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: sales-proposal-builder-${{ env.VERSION }}-${{ github.sha }}
+          path: dist/*/sales-proposal-builder.zip
+          if-no-files-found: error

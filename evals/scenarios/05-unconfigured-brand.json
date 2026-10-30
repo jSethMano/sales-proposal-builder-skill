@@ -1,0 +1,78 @@
+{
+  "id": "05-unconfigured-brand",
+  "title": "With no company pack, a brand given in chat is used and nothing generic is left",
+  "requirement": "US-5",
+  "pack": "neutral",
+  "query": "Make a proposal for Kauri Joinery from my company, Harbour Light Tech. Use the attached logo and our brand colour #0E7C86. We quote in New Zealand dollars. They have 12 staff: managed support at NZ$65 per user per month, and a one-off network setup at NZ$1,800. 12-month term starting 1 December 2026. Their contact is Aroha Ngata, Owner. Sign it from me, Mere Walker, Director. Date it 16 November 2026.",
+  "files": [
+    "evals/briefs/harbour-light-logo.png"
+  ],
+  "turns": [],
+  "expectedQuote": "evals/fixtures/05.quote.json",
+  "expected": [
+    {
+      "id": "docx-produced",
+      "kind": "code",
+      "check": "docxProduced"
+    },
+    {
+      "id": "no-generic-brand",
+      "kind": "code",
+      "check": "docxNotContains",
+      "args": {
+        "text": "Your Company"
+      }
+    },
+    {
+      "id": "brand-color",
+      "kind": "code",
+      "check": "containsColor",
+      "args": {
+        "hex": "0E7C86"
+      }
+    },
+    {
+      "id": "logo-embedded",
+      "kind": "code",
+      "check": "logoEmbedded",
+      "args": {
+        "file": "evals/briefs/harbour-light-logo.png"
+      }
+    },
+    {
+      "id": "names-present",
+      "kind": "code",
+      "check": "docxContainsAll",
+      "args": {
+        "texts": [
+          "Harbour Light Tech",
+          "Kauri Joinery",
+          "Mere Walker"
+        ]
+      }
+    },
+    {
+      "id": "totals-exact",
+      "kind": "code",
+      "check": "totalsMatchFixture"
+    }
+  ],
+  "_oracle": "What a correct run produces. graders.test.ts builds it with the real scripts and expects every code check to pass.",
+  "oracle": {
+    "client": "Kauri Joinery",
+    "contact": {
+      "name": "Aroha Ngata",
+      "title": "Owner"
+    },
+    "startDate": "2026-12-01",
+    "brand": {
+      "name": "Harbour Light Tech",
+      "primary": "#0E7C86",
+      "currency": "NZD",
+      "locale": "en-NZ",
+      "signatoryName": "Mere Walker",
+      "signatoryTitle": "Director",
+      "logo": "evals/briefs/harbour-light-logo.png"
+    }
+  }
+}

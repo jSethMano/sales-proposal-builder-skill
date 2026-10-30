@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "quoteDate": "2026-11-16",
+  "termMonths": 12,
+  "lines": [
+    { "sku": "LR-SUPPORT-CORE", "quantity": 25 },
+    { "sku": "LR-M365-BACKUP", "quantity": 25 }
+  ]
+}

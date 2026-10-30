@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "pricingRef": "sha256:b649409dca2151830b901f162fac3556baaf477c09e1b550c43882192b2c5692",
+  "title": "IT Support and a Move to Microsoft 365",
+  "date": "2026-11-16",
+  "startDate": "2027-01-04",
+  "client": {
+    "name": "Acme Logistics",
+    "contact": {
+      "name": "Dana Whitfield",
+      "title": "Operations Manager",
+      "email": "dana.whitfield@acmelogistics.example"
+    }
+  },
+  "sections": {
+    "executiveSummary": "You asked us to look after IT for your 80 staff and to move you to Microsoft 365. Here's how we'd do it.\n\nOur helpdesk would support everyone from January, and Cloud Backup would keep a copy of your email and files every day. Before that, we'd get to know your setup, take over from your current provider, and move your email and files across over a weekend, so nobody loses a working day.\n\nOngoing support costs {{pricing.monthlyRecurring}} a month over {{pricing.termMonths}} months. The one-off work costs {{pricing.oneTime}}. Every line is in the Investment section.",
+    "understanding": "Acme Logistics has 80 staff. You want two things: IT support you can rely on, and a move to Microsoft 365.\n\nHere's what we think matters most to you:\n\n- Help for all 80 people, with a clear promise on how fast we respond when something stops work.\n- A move to Microsoft 365 that doesn't get in the way of the business.\n- Support up and running from the start of January.\n\nIf we've got any of that wrong, tell us and we'll change the proposal before you sign.",
+    "solution": "We'd use four of our standard services.\n\n### Ongoing\n\n- **Helpdesk and Support** for all 80 people: phone, email and chat during business hours, remote fixes, on-site visits when needed, and updates and antivirus on every computer.\n- **Cloud Backup** for all 80 people, so we can bring back email and files from any day in the last 12 months.\n\n### One-off\n\n- **Onboarding**: we audit your computers, accounts and network, write down how it all fits together, and take over from your current provider.\n- **Move to Microsoft 365** for all 80 people, planned with you and done over a weekend.\n\nWe do the one-off work first, so support starts on a setup we know well.",
+    "scope": [
+      { "item": "IB-HELPDESK", "notes": "All 80 staff from the start date. We'll agree who to call for urgent issues during onboarding." },
+      { "item": "IB-BACKUP", "notes": "The same 80 people. Ask the helpdesk for any restore." },
+      { "item": "IB-ONBOARDING", "notes": "Done before support starts, so the helpdesk knows your setup from day one." },
+      { "item": "IB-M365-MOVE", "notes": "Priced for 80 people. We agree the plan and the weekend with you before anything moves." }
+    ],
+    "timeline": [
+      { "label": "Onboarding", "when": "Weeks 1–3 after you sign", "detail": "Audit, documentation and handover from your current provider." },
+      { "label": "Move to Microsoft 365", "when": "Weeks 3–6 after you sign", "detail": "Plan agreed, then email and files moved over a weekend." },
+      { "label": "Support", "when": "From 4 January 2027", "detail": "Helpdesk and daily backups for everyone." }
+    ],
+    "whyUs": {
+      "intro": "We've moved organisations your size off old servers and onto Microsoft 365 before. Here's one of them.",
+      "caseStudyIds": ["CS-003"]
+    },
+    "assumptions": [
+      "You'll give us admin access to your current email and network before onboarding starts.",
+      "Prices assume 80 people; we bill changes as set out in the terms.",
+      "On-site work happens at your main office."
+    ],
+    "notIncluded": [
+      "New computers, phones or Microsoft 365 licences."
+    ],
+    "nextSteps": "To go ahead, sign the acceptance section below and send it back to us. We'll then lock in onboarding dates and introduce you to the people who'll look after you. This quote is good until {{pricing.validUntil}}."
+  }
+}

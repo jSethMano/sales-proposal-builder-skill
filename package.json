@@ -14,7 +14,11 @@
     "test": "npm run build && node --test \"test/**/*.test.ts\"",
     "logos": "node tools/make-logos.ts",
     "probe:zip": "node spikes/zip-probe.ts",
-    "probe:api": "node spikes/probe-api.ts"
+    "probe:api": "node spikes/probe-api.ts",
+    "preview": "node tools/preview.ts",
+    "package": "node tools/package.ts",
+    "evals": "node evals/harness/run.ts",
+    "screenshots": "node tools/preview.ts --screenshots"
   },
   "devDependencies": {
     "@anthropic-ai/sdk": "1.3.0",

@@ -1,0 +1,74 @@
+{
+  "id": "01-complete-brief",
+  "title": "A complete brief produces a correct, fully branded proposal",
+  "requirement": "US-1",
+  "pack": "lumen-ridge-it",
+  "query": "Please put together a proposal for Acme Logistics. They have 80 staff and want Managed IT Support (Core) and Microsoft 365 Backup for all 80 users, our standard onboarding, and a Microsoft 365 migration for all 80 mailboxes. They're currently on an old on-premises Exchange server. 24-month term starting 4 January 2027. The contact is Dana Whitfield, Operations Manager (dana.whitfield@acmelogistics.example). Date the proposal 16 November 2026.",
+  "files": [],
+  "turns": [],
+  "expectedQuote": "evals/fixtures/01.quote.json",
+  "expected": [
+    {
+      "id": "docx-produced",
+      "kind": "code",
+      "check": "docxProduced"
+    },
+    {
+      "id": "all-sections",
+      "kind": "code",
+      "check": "sectionHeadings"
+    },
+    {
+      "id": "totals-exact",
+      "kind": "code",
+      "check": "totalsMatchFixture"
+    },
+    {
+      "id": "brand-color",
+      "kind": "code",
+      "check": "containsColor",
+      "args": {
+        "hex": "1F3A5F"
+      }
+    },
+    {
+      "id": "names-present",
+      "kind": "code",
+      "check": "docxContainsAll",
+      "args": {
+        "texts": [
+          "Acme Logistics",
+          "Lumen Ridge IT",
+          "Dana Whitfield"
+        ]
+      }
+    },
+    {
+      "id": "no-placeholders",
+      "kind": "code",
+      "check": "noPlaceholders"
+    },
+    {
+      "id": "not-draft",
+      "kind": "code",
+      "check": "docxNotContains",
+      "args": {
+        "text": "DRAFT"
+      }
+    },
+    {
+      "id": "delivery-note",
+      "kind": "model",
+      "rubric": "The assistant's final reply delivers the proposal document and briefly states any assumptions it made, or says that it made none."
+    }
+  ],
+  "_oracle": "What a correct run produces. graders.test.ts builds it with the real scripts and expects every code check to pass.",
+  "oracle": {
+    "client": "Acme Logistics",
+    "contact": {
+      "name": "Dana Whitfield",
+      "title": "Operations Manager"
+    },
+    "startDate": "2027-01-04"
+  }
+}

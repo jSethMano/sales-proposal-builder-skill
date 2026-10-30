@@ -1,0 +1,53 @@
+{
+  "id": "02-missing-inputs",
+  "title": "Missing term and start date are asked for, not invented",
+  "requirement": "US-2",
+  "pack": "lumen-ridge-it",
+  "query": "Proposal for Acme Logistics please: 80 staff, Managed IT Support (Core) and Microsoft 365 Backup for everyone, plus our standard onboarding. Contact is Dana Whitfield, Operations Manager. Date it 16 November 2026.",
+  "files": [],
+  "turns": [
+    "24 months, starting 4 January 2027."
+  ],
+  "expectedQuote": "evals/fixtures/02.quote.json",
+  "expected": [
+    {
+      "id": "no-docx-before-answer",
+      "kind": "code",
+      "check": "noDocxBeforeTurn",
+      "args": {
+        "turn": 2
+      }
+    },
+    {
+      "id": "docx-produced",
+      "kind": "code",
+      "check": "docxProduced"
+    },
+    {
+      "id": "totals-exact",
+      "kind": "code",
+      "check": "totalsMatchFixture"
+    },
+    {
+      "id": "asks-term-and-start",
+      "kind": "model",
+      "turn": 1,
+      "rubric": "In its first reply, the assistant asks the salesperson for the contract term (in months) and the start date, and does not choose values for either itself."
+    },
+    {
+      "id": "asks-only-whats-missing",
+      "kind": "model",
+      "turn": 1,
+      "rubric": "In its first reply, the assistant does not ask again for information the salesperson already gave: the client name, the contact, the number of staff, or which services they want."
+    }
+  ],
+  "_oracle": "What a correct run produces. graders.test.ts builds it with the real scripts and expects every code check to pass.",
+  "oracle": {
+    "client": "Acme Logistics",
+    "contact": {
+      "name": "Dana Whitfield",
+      "title": "Operations Manager"
+    },
+    "startDate": "2027-01-04"
+  }
+}

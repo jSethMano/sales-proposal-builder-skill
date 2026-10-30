@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "pricingRef": "sha256:bd6293018175cefeeeefb54f431c630485f7e80a885760f95532156063845d10",
+  "title": "Managed IT Support and Microsoft 365 Migration",
+  "date": "2026-11-16",
+  "startDate": "2027-01-04",
+  "client": {
+    "name": "Acme Logistics",
+    "contact": {
+      "name": "Dana Whitfield",
+      "title": "Operations Manager",
+      "email": "dana.whitfield@acmelogistics.example"
+    }
+  },
+  "sections": {
+    "executiveSummary": "Acme Logistics has asked Lumen Ridge IT to provide day-to-day IT support for its 80 staff and to move the business to Microsoft 365. This proposal sets out how we would do both, starting in January.\n\nWe propose Managed IT Support (Core) for every user, together with Microsoft 365 Backup, so that mail and files can be restored if they are lost or deleted. Before the support term begins, two fixed projects prepare the ground: onboarding, in which we document the current environment and take over from the current provider, and the migration itself, with cutover outside business hours.\n\nThe ongoing services cost {{pricing.monthlyRecurring}} per month over a {{pricing.termMonths}}-month term, and the one-time projects cost {{pricing.oneTime}}. The Investment section sets out each line.",
+    "understanding": "Acme Logistics has 80 staff and is looking for two things from an IT partner: dependable day-to-day support, and a move to Microsoft 365.\n\nWe understand the priorities to be:\n\n- Support for all 80 staff, with a defined response time when an issue stops people working.\n- A move of email and files to Microsoft 365 that does not interrupt the business.\n- Support in place from the start of January.\n\nIf any of these priorities differ from what Acme Logistics needs, we will revise the proposal before it is signed.",
+    "solution": "We propose four services from our standard catalog.\n\n### Ongoing services\n\n- **Managed IT Support (Core)** for all 80 users: a service desk during business hours, remote and on-site support, patch management and endpoint protection.\n- **Microsoft 365 Backup** for all 80 users, so that mailboxes, OneDrive, SharePoint and Teams can be restored for up to a year.\n\n### One-time projects\n\n- **Onboarding and Documentation**, to audit the current environment, document it in our system and take over from the current provider.\n- **Microsoft 365 Migration** for all 80 users, planned with Acme Logistics and cut over outside business hours.\n\nThe projects come first, so that support begins on a documented environment that has already moved to Microsoft 365.",
+    "scope": [
+      { "item": "LR-SUPPORT-CORE", "notes": "Covers all 80 staff from the start date. We will agree escalation contacts with Acme Logistics during onboarding." },
+      { "item": "LR-M365-BACKUP", "notes": "Covers the same 80 users. Restores are requested through the service desk." },
+      { "item": "LR-ONBOARDING", "notes": "Completed before the support term starts, so that the service desk works from accurate documentation from the first day." },
+      { "item": "LR-M365-MIGRATION", "notes": "Priced for 80 users. The migration plan, including the cutover weekend, is agreed with Acme Logistics before any mailbox moves." }
+    ],
+    "timeline": [
+      { "label": "Onboarding", "when": "Weeks 1–3 after acceptance", "detail": "Audit, documentation and handover from the current provider." },
+      { "label": "Migration", "when": "Weeks 3–6 after acceptance", "detail": "Migration plan agreed, then mail and files moved outside business hours." },
+      { "label": "Managed support", "when": "From 4 January 2027", "detail": "Service desk, monitoring and backup for all users." }
+    ],
+    "whyUs": {
+      "intro": "We have moved logistics businesses of a similar size to Microsoft 365 while keeping their operations running. The case study below describes one of them.",
+      "caseStudyIds": ["CS-001"]
+    },
+    "assumptions": [
+      "Acme Logistics will give us administrator access to its current email system and network before onboarding begins.",
+      "Prices are based on 80 users; changes in numbers are billed as described in the terms.",
+      "On-site work takes place at Acme Logistics' main office."
+    ],
+    "notIncluded": [
+      "Purchase of hardware and Microsoft 365 licenses."
+    ],
+    "nextSteps": "To proceed, please sign the acceptance section below and return it to us. We will then confirm the onboarding dates and introduce the team who will look after Acme Logistics. This proposal is valid until {{pricing.validUntil}}."
+  }
+}

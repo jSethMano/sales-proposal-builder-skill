@@ -139,7 +139,7 @@ sales-proposal-builder/
 │       ├── case-studies.cts      parse case-studies.md
 │       ├── image.cts             PNG/JPEG detection and pixel size from header bytes
 │       ├── closest.cts           Levenshtein "did you mean"
-│       └── docx/                 theme.cts cover.cts sections.cts pricing-table.cts header-footer.cts
+│       └── docx/                 theme, context, blocks, images, cover, header-footer, investment, sections, document (.cts)
 ├── skill/sales-proposal-builder/
 │   ├── SKILL.md
 │   ├── references/  proposal-structure.md  writing-guide.md  proposal-schema.md  quoting.md
@@ -380,7 +380,7 @@ interface Proposal {
     executiveSummary: Markdown;
     understanding: Markdown;
     solution: Markdown;
-    scope: { sku: string; notes: Markdown }[];     // exactly the SKUs in pricing.lines (or custom names)
+    scope: { item: string; notes: Markdown }[];    // one per priced line: the SKU, or a custom line's name
     timeline: { label: string; when: string; detail: Markdown }[];
     whyUs: { intro: Markdown; caseStudyIds: string[] };   // at least one when the pack has case studies
     assumptions: string[];
@@ -408,8 +408,8 @@ Every script follows the same conventions:
 | Script | Arguments | Success output |
 |---|---|---|
 | `price.cjs` | `<quote.json> [--pack dir] [--out pricing.json]` | Without `--out`: `{ok, pricing, sha256, warnings}`. With `--out`: the file holds `pricing`, and stdout is a summary `{ok, out, pricingRef, totals, approval, warnings}` so the full pricing doesn't fill Claude's context. `pricingRef` is ready to paste into `proposal.json` |
-| `validate.cjs` | `<proposal.json> <pricing.json> [--pack dir]` | `{ok, warnings[], draft, approver}` |
-| `build-docx.cjs` | `<proposal.json> <pricing.json> <out.docx> [--pack dir]` | `{ok, path, bytes, pages: null, draft}` |
+| `validate.cjs` | `<proposal.json> <pricing.json> [--pack dir]` | `{ok, draft, approver, approvalReason, priceSource, warnings, next}`. `next` tells Claude what to do, including telling the salesperson about an approval |
+| `build-docx.cjs` | `<proposal.json> <pricing.json> <out.docx> [--pack dir]` | `{ok, path, bytes, draft, watermark, warnings, next}`. Runs every validation check first, and writes nothing if any fail |
 | `check-pack.cjs` | `[dir]` | `{ok, packId, configured, warnings[]}` |
 | `init-pack.cjs` | `<outDir> --name <n> --primary <hex> [--signatory-name <n> --signatory-title <t>] [--accent <hex>] [--logo <file>] [--currency <ISO>] [--locale <tag>] [--legal-name <n>] [--from <pack>] [--force]` | `{ok, pack, packId, logo, currency, next}`. Starts from the skill's pack (or `--from`) and replaces only the brand. The base company's contact details are dropped. The signatory and currency are required when the base pack lacks them (the neutral pack). Refuses an `outDir` inside the skill folder, and won't overwrite an existing pack without `--force` |
 
@@ -440,7 +440,7 @@ Example of a failure:
 | `E_RAW_AMOUNT` | A currency symbol or ISO code next to digits, or digits followed by a currency word | "Use {{pricing.termTotal}}" |
 | `E_MARKDOWN` | Markdown outside the supported subset | |
 | `W_PERCENT` | A bare percentage in prose (possibly an invented statistic, FR-8) | "Keep it only if the pack or the brief states it" |
-| `W_LENGTH` | A section outside the length guidance in `proposal-structure.md` | |
+| `W_LENGTH` | A section outside its word range, or more than 12 timeline rows. The ranges live in `LENGTH_GUIDE` in `lib/rules.cts`, and `proposal-structure.md` quotes them | |
 
 The scans cover every prose field and the client fields. The pack check (section 4) runs first.
 
@@ -466,6 +466,16 @@ Each section, in order, with where its content comes from:
 - The line table has the columns Item, Qty, List unit price, Discounts and Amount, followed by totals rows: Monthly recurring, One-time, and Total over N months.
 - Below the table: the tax note and the validity date.
 - "As supplied" prices are labeled as such.
+
+**As built (M3):**
+- **Section headings** are fixed, and evals check them: `SECTION_TITLES` in `lib/docx/sections.cts`. "Why us" is rendered as "Why {company}".
+- **Investment section:** a "Monthly services" table and a "One-time services" table, each with the columns Item, Qty, List price, Discounts and Amount, plus a total row. A Summary table follows: monthly, term, one-time, and "Total over N months". Then lines for the extra discount and the savings against list price, the DRAFT note if needed, the tax note and the validity.
+- **Numbers:** the builder formats amounts but never computes one.
+- **Body font:** set on both the document defaults and the Normal style. Word and LibreOffice read the defaults; Apple's renderer (Pages, Quick Look) only reads the style.
+- **Watermark:** `docx/watermarks` is loaded at run time instead of being chosen at M0. When it's present, the DRAFT watermark is added, and the build output reports `watermark: true|false`. The banner is there either way.
+- **Page flow:** only the cover forces a page break. Tables keep every row but the last with the next row, so a table moves whole rather than splitting. Each scope item's description and "Includes" label stay with its list, and the acceptance intro stays with the signature table. With these rules, forced breaks before Investment and Terms only left half-empty pages; removing them took the examples from 8 pages to 6.
+- **Signature row:** has a third of an inch above it, to sign by hand.
+- **Metadata timestamp:** `docx` always writes the build time into `docProps/core.xml`, and it can't be set. The document content is deterministic; that one timestamp isn't.
 
 ### Theme (`docx/theme.cts`)
 
@@ -517,6 +527,12 @@ Claude creates a scratch folder (`./proposal-work/<client-slug>/`) for `quote.js
    - no `.ts`, `.cts` or `.map` files;
    - under 30 MB uncompressed.
 7. Print `{packId, version, path, sha256, bytes}`.
+
+**As built (M4):**
+- **Packaging was pulled forward into M4,** because the eval harness uploads its zips.
+- **Compiling:** `tools/package.ts` compiles the scripts itself before packaging. CI still checks that the committed scripts are current (section 14).
+- **Version:** the version isn't stamped into `SKILL.md`. `SKILL.md` ends with "Skill version X.Y.Z.", and packaging fails if that differs from `package.json`. That keeps the repo's skill folder uploadable as it is. Frontmatter `metadata.version` waits for the M0 result.
+- **Extra checks:** packaging also rejects a frontmatter `name` that differs from the folder name, a description with XML tags, and a link in `SKILL.md` to a reference that doesn't exist.
 
 ## 12. Tests
 
@@ -631,6 +647,29 @@ Baseline runs are expected to fail some of these checks, for example the section
 
 `--budget-usd` stops the run before starting any case that would exceed the budget, using the measured cost of each case so far.
 
+### As built (M4)
+
+**Modules.** Besides those in the components table:
+- `types.ts`;
+- `scenarios.ts`: loads scenarios and computes expected totals with the shipped `price.cjs`;
+- `cost.ts`: usage from the API's own `usage` blocks, with Haiku's long-prompt rates applied per call;
+- `oracle.ts`.
+
+The `.docx` reader moved to `tools/lib/docx-text.ts`, which the tests share.
+
+**The Messages API call:** stable `client.messages.stream(...).finalMessage()` with `code_execution_20260521`, uploads as `container_upload` blocks that expire after a day, and `effort: "high"` for every model under test. The served model must start with the requested ID.
+
+**Oracles.** Each scenario has an `oracle` (client, contact and start date, plus a brand for the unconfigured scenario). `graders.test.ts` builds the correct document with the real scripts and expects every code check to pass, and expects an empty run to fail them. The checks are therefore tested in CI with no API calls. Scenario 01's checks, run against the Ironbark oracle, flag exactly the four behaviors that differ.
+
+**Commands:**
+- `--dry-run` packages the zips, prices the fixtures and estimates cost, all without a key.
+- `--judge-selftest` runs the judge on one correct transcript and three wrong ones: an empty reply, "I don't know", and a confidently wrong answer.
+- `--report-only` rewrites `RESULTS.md`.
+
+**Budget.** The budget guard reserves each running case's estimated cost, so cases running in parallel can't overshoot it together.
+
+**Judge failures.** If the judge itself fails, the behavior is left ungraded (⚠) and is never counted as a failure.
+
 ### Manual claude.ai pass
 
 `evals/MANUAL.md` is a checklist for the same 7 scenarios. Results are entered into `RESULTS.md` with `source: claude.ai`.
@@ -651,6 +690,12 @@ Steps:
 6. `actions/upload-artifact` for the three zips, named with the version and short commit.
 
 Evals don't run in CI in v1 (FR-24). A `workflow_dispatch` eval job with a budget input is a post-v1 option.
+
+**As built (M5):**
+- The workflow uses `actions/checkout@v7`, `actions/setup-node@v7` (Node 22, npm cache) and `actions/upload-artifact@v7`, the latest majors on 2026-10-30.
+- **Checked locally first:** a clean copy of the working tree, run with `npm ci` under `TZ=UTC`, passed every step. Its zips had the same sha256 as zips built in UTC+8, so packages are reproducible across timezones.
+- **Demo:** `npm run preview` builds four variants (Lumen, Ironbark, a Lumen DRAFT, and the neutral pack branded in chat). `npm run screenshots` renders the README images to `docs/images/`, finding pages by their content.
+- **Investment tables** drop the Discounts column when no line in the table is discounted.
 
 ## 15. M0 runtime probe
 

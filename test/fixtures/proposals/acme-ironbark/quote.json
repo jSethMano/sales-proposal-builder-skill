@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "quoteDate": "2026-11-16",
+  "termMonths": 24,
+  "lines": [
+    { "sku": "IB-HELPDESK", "quantity": 80 },
+    { "sku": "IB-BACKUP", "quantity": 80 },
+    { "sku": "IB-ONBOARDING", "quantity": 1 },
+    { "sku": "IB-M365-MOVE", "quantity": 80 }
+  ]
+}

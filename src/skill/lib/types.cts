@@ -187,3 +187,61 @@ export interface PricingOutput {
   approval: Approval;
   formatted: Record<PricingToken, string>;
 }
+
+// ---------- proposal (written by Claude; design §6) ----------
+
+/** The markdown subset in design §6; may contain {{pricing.*}} and {{client.name}} tokens. */
+export type Markdown = string;
+
+export interface Proposal {
+  schemaVersion: 1;
+  /** "sha256:<hex>" of the pricing.json bytes this proposal was written against (design X1). */
+  pricingRef: string;
+  title: string;
+  date: string;
+  startDate: string;
+  client: {
+    name: string;
+    contact: { name: string; title?: string; email?: string };
+    address?: string;
+    sites?: string[];
+  };
+  sections: {
+    executiveSummary: Markdown;
+    understanding: Markdown;
+    solution: Markdown;
+    /** One entry per priced line: `item` is the SKU, or the name of a custom line. */
+    scope: { item: string; notes: Markdown }[];
+    timeline: { label: string; when: string; detail: Markdown }[];
+    whyUs: { intro: Markdown; caseStudyIds: string[] };
+    assumptions: string[];
+    notIncluded: string[];
+    nextSteps: Markdown;
+  };
+}
+
+// ---------- markdown (lib/markdown.cts) ----------
+
+export interface Inline {
+  text: string;
+  bold: boolean;
+  italic: boolean;
+}
+
+export type Block =
+  | { type: "heading"; inlines: Inline[] }
+  | { type: "paragraph"; inlines: Inline[] }
+  | { type: "bullets"; items: Inline[][] }
+  | { type: "numbered"; items: Inline[][] };
+
+export interface MarkdownIssue {
+  /** 1-based line within the markdown text. */
+  line: number;
+  message: string;
+  hint: string;
+}
+
+export interface ParsedMarkdown {
+  blocks: Block[];
+  issues: MarkdownIssue[];
+}

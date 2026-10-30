@@ -1,34 +1,12 @@
 // White-label isolation (NFR-3): the skill core must not contain anything from a company pack.
-// M1 covers the core; M3 adds the cross-pack document checks and M5 the zip checks.
+// Covers the skill core and the built documents; M5 adds the zip checks.
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import { describe, it } from "node:test";
 import { listFiles } from "../tools/lib/zip.ts";
-import { DEMO_PACKS, readJson, ROOT, SKILL_DIR } from "./helpers.ts";
-
-interface DemoBrand {
-  packId: string;
-  company: Record<string, string>;
-  colors: Record<string, string>;
-}
-
-/** Every string that identifies a demo pack: names, contact details, colors, SKUs, approver. */
-export function identifyingStrings(packDir: string): string[] {
-  const brand = readJson<DemoBrand>(join(packDir, "brand.json"));
-  const catalog = readJson<{ items: { sku: string; name: string }[] }>(join(packDir, "catalog.json"));
-  const pricing = readJson<{ approval: { approver: string } | null }>(join(packDir, "pricing.json"));
-  const strings = [
-    brand.packId,
-    ...Object.values(brand.company),
-    // Colors appear with or without "#", in either case.
-    ...Object.values(brand.colors).map((hex) => hex.replace("#", "")),
-    ...catalog.items.map((i) => i.sku),
-  ];
-  // Only approver roles specific enough to identify the pack; "Sales Director" is a generic title.
-  if (pricing.approval && pricing.approval.approver !== "Sales Director") strings.push(pricing.approval.approver);
-  return strings;
-}
+import { openDocx } from "./docx.ts";
+import { buildFixture, DEMO_PACKS, identifyingStrings, readJson, ROOT, SKILL_DIR } from "./helpers.ts";
 
 /** The skill core: the TypeScript source and the shipped skill folder, minus the swappable pack. */
 function coreFiles(): string[] {
@@ -56,4 +34,23 @@ describe("the skill core contains no company", () => {
       assert.deepEqual(needles.filter((n) => text.includes(n)), [], relative(ROOT, file));
     }
   });
+});
+
+describe("each document carries only its own pack", () => {
+  const lower = (s: string): string => s.toLowerCase();
+  const docs = {
+    lumen: openDocx(buildFixture("acme-lumen", DEMO_PACKS.lumen).out).allXml().toLowerCase(),
+    ironbark: openDocx(buildFixture("acme-ironbark", DEMO_PACKS.ironbark).out).allXml().toLowerCase(),
+  };
+  const strings = { lumen: identifyingStrings(DEMO_PACKS.lumen).map(lower), ironbark: identifyingStrings(DEMO_PACKS.ironbark).map(lower) };
+  const brand = (dir: string) => readJson<{ company: { displayName: string }; colors: { primary: string } }>(join(dir, "brand.json"));
+
+  for (const [own, other] of [["lumen", "ironbark"], ["ironbark", "lumen"]] as const) {
+    it(`the ${own} document has its own brand and nothing from ${other}`, () => {
+      const b = brand(DEMO_PACKS[own]);
+      assert.ok(docs[own].includes(b.company.displayName.toLowerCase()), "own company name");
+      assert.ok(docs[own].includes(b.colors.primary.replace("#", "").toLowerCase()), "own primary color");
+      assert.deepEqual(strings[other].filter((s) => docs[own].includes(s)), []);
+    });
+  }
 });

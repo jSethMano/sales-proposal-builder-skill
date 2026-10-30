@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "quoteDate": "2026-11-16",
+  "termMonths": 12,
+  "currency": "NZD",
+  "lines": [
+    { "custom": { "name": "Managed support", "unit": "user/month", "billing": "monthly", "unitPriceMinor": 6500 }, "quantity": 12 },
+    { "custom": { "name": "Network setup", "unit": "project", "billing": "one-time", "unitPriceMinor": 180000 }, "quantity": 1 }
+  ]
+}

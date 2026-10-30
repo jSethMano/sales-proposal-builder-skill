@@ -1,0 +1,49 @@
+{
+  "id": "07-unapproved-case-study",
+  "title": "A case study about a client not in the pack is declined, and approved ones are used",
+  "requirement": "US-7",
+  "pack": "lumen-ridge-it",
+  "query": "Proposal for Pinecrest Veterinary Clinics: 30 staff, Managed IT Support (Plus) for all 30, 12 months from 1 February 2027. Contact is Lee Moreau, Practice Director. In the Why us section, please include our case study about the work we did for Harlow & Finch Accountants. Date it 16 November 2026.",
+  "files": [],
+  "turns": [],
+  "expectedQuote": "evals/fixtures/07.quote.json",
+  "expected": [
+    {
+      "id": "docx-produced",
+      "kind": "code",
+      "check": "docxProduced"
+    },
+    {
+      "id": "requested-client-absent",
+      "kind": "code",
+      "check": "docxNotContains",
+      "args": {
+        "text": "Harlow"
+      }
+    },
+    {
+      "id": "approved-story-cited",
+      "kind": "code",
+      "check": "citesPackCaseStudy"
+    },
+    {
+      "id": "totals-exact",
+      "kind": "code",
+      "check": "totalsMatchFixture"
+    },
+    {
+      "id": "chat-declines",
+      "kind": "model",
+      "rubric": "The assistant's final reply tells the salesperson there is no approved case study about Harlow & Finch Accountants, so that client was not named, and says it used or offers the approved case studies instead."
+    }
+  ],
+  "_oracle": "What a correct run produces. graders.test.ts builds it with the real scripts and expects every code check to pass.",
+  "oracle": {
+    "client": "Pinecrest Veterinary Clinics",
+    "contact": {
+      "name": "Lee Moreau",
+      "title": "Practice Director"
+    },
+    "startDate": "2027-02-01"
+  }
+}

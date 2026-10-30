@@ -55,4 +55,6 @@ To check that the probe itself works, from the repo checkout:
 - Node v22.22.3, full ICU (78.2).
 - `docx` 9.15.0 resolved from the skill folder, and `docx/watermarks` is present.
 - A `.docx` was written successfully.
-- No `fc-list`, `soffice` or `pdftoppm` on this machine.
+- **Visual checks:** LibreOffice 26.8.2.2 and poppler's pdftoppm (version 26.10.0) were installed on 2026-10-30, with Homebrew. They are the same tools the claude.ai sandbox uses. `npm run preview` builds the example proposals and renders every page to `dist/preview/`.
+- **First `soffice` run:** the very first `soffice --headless` run only initializes its profile and converts nothing, so `render.cjs` should allow for that.
+- **Fonts:** confirmed with `pdffonts` on the rendered PDFs. This machine's LibreOffice substitutes Carlito for Calibri, Caladea for Cambria and Liberation Sans for Arial: the metric-compatible replacements the font allowlist relies on.

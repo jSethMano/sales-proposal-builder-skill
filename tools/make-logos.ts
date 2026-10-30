@@ -132,6 +132,22 @@ function ironbark(): Buffer {
   }));
 }
 
+// Harbour Light Tech, the brand given in chat in eval scenario 5: a teal beam on a white disc.
+function harbourLight(): Buffer {
+  const S = 120;
+  const teal = hex("#0E7C86");
+  const white = hex("#FFFFFF");
+  return encodePng(S, S, render(S, S, (x, y) => {
+    const d = Math.hypot(x - 60, y - 60);
+    if (d > 58) return TRANSPARENT;
+    if (d > 50) return teal;
+    // A beam fanning out to the right from the lighthouse at the center.
+    const angle = Math.atan2(y - 60, x - 60);
+    if (x > 60 && Math.abs(angle) < 0.35) return teal;
+    return d < 10 ? teal : white;
+  }));
+}
+
 // A plain test logo for fixtures: 40×20, one color.
 function testLogo(): Buffer {
   return encodePng(40, 20, render(40, 20, () => hex("#336699")));
@@ -141,6 +157,7 @@ const outputs: [string, Buffer][] = [
   ["packs/lumen-ridge-it/logo.png", lumenRidge()],
   ["packs/ironbark-msp/logo.png", ironbark()],
   ["test/fixtures/packs/test-usd/logo.png", testLogo()],
+  ["evals/briefs/harbour-light-logo.png", harbourLight()],
 ];
 for (const [file, data] of outputs) {
   mkdirSync(dirname(file), { recursive: true });

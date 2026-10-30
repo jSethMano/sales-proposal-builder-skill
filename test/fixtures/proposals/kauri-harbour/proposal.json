@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "pricingRef": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "title": "Managed Support and Network Setup",
+  "date": "2026-11-16",
+  "startDate": "2026-12-01",
+  "client": {
+    "name": "Kauri Joinery",
+    "contact": { "name": "Aroha Ngata", "title": "Owner" }
+  },
+  "sections": {
+    "executiveSummary": "Kauri Joinery has asked Harbour Light Tech to look after IT for its 12 staff and to set up a reliable network at the workshop. This proposal covers both, starting on 1 December.\n\nWe will set up the network first, so that support starts on equipment we installed and know well. From then on, our team handles day-to-day support for everyone, from a forgotten password to a laptop that won't start.\n\nSupport costs {{pricing.monthlyRecurring}} per month over {{pricing.termMonths}} months, and the network setup is a one-off {{pricing.oneTime}}. The Investment section shows each line.",
+    "understanding": "Kauri Joinery has 12 staff and wants two things: IT support it can call on, and a network that works across the office and the workshop.\n\nWe understand the priorities to be:\n\n- Help for all 12 people when something stops them working.\n- A dependable network, set up properly once.\n- Everything in place from 1 December.\n\nIf we've misunderstood anything, tell us and we'll change the proposal before you sign.",
+    "solution": "We propose two services.\n\n- **Network setup**: we install and configure the network once, and document it so that anyone on our team can support it.\n- **Managed support** for all 12 staff: one number to call, remote fixes, and visits when a problem needs someone on site.\n\nThe setup comes first, in the last weeks of November, so that support starts on 1 December with a network we know well and nothing left over from before.",
+    "scope": [
+      { "item": "Managed support", "notes": "Covers all 12 staff from 1 December, during business hours." },
+      { "item": "Network setup", "notes": "A one-off project at the office and workshop, finished before support starts." }
+    ],
+    "timeline": [
+      { "label": "Network setup", "when": "Last two weeks of November", "detail": "Install, configure and document the network." },
+      { "label": "Managed support", "when": "From 1 December 2026", "detail": "Support for all 12 staff." }
+    ],
+    "whyUs": {
+      "intro": "We are a small local team. The people who set up your network are the same people who answer when you call, so nothing gets lost in a handover.",
+      "caseStudyIds": []
+    },
+    "assumptions": [
+      "Kauri Joinery will give us access to the office and workshop during the setup weeks.",
+      "Prices are based on 12 staff; changes in numbers are billed from the following month."
+    ],
+    "notIncluded": [
+      "New computers, phones or software licences."
+    ],
+    "nextSteps": "To go ahead, sign the acceptance section below and send it back to us. We will then book the setup dates with you. This proposal is valid until {{pricing.validUntil}}."
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "quoteDate": "2026-11-16",
+  "termMonths": 12,
+  "lines": [
+    { "sku": "LR-SUPPORT-PLUS", "quantity": 30 }
+  ]
+}

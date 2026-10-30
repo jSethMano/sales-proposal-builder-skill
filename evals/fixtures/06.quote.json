@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "quoteDate": "2026-11-16",
+  "termMonths": 24,
+  "lines": [
+    { "sku": "IB-HELPDESK", "quantity": 30 },
+    { "sku": "IB-DEVICES", "quantity": 30 }
+  ]
+}

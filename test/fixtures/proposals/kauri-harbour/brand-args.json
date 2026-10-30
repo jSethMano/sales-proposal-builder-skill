@@ -1,0 +1,5 @@
+{
+  "_comment": "The brand a salesperson gives in chat (unconfigured mode), as init-pack.cjs arguments.",
+  "args": ["--name", "Harbour Light Tech", "--primary", "#0E7C86", "--currency", "NZD", "--locale", "en-NZ",
+           "--signatory-name", "Mere Walker", "--signatory-title", "Director", "--logo", "evals/briefs/harbour-light-logo.png"]
+}

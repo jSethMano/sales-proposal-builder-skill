@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "quoteDate": "2026-11-16",
+  "termMonths": 36,
+  "lines": [
+    { "sku": "IB-HELPDESK", "quantity": 40 },
+    { "sku": "IB-BACKUP", "quantity": 40 }
+  ],
+  "extraDiscount": { "bps": 2500, "appliesTo": "recurring", "reason": "Client asked for 25% off the monthly services" }
+}

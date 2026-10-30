@@ -1,0 +1,47 @@
+{
+  "id": "04-out-of-catalog",
+  "title": "A service outside the catalog is flagged, not priced",
+  "requirement": "US-4",
+  "pack": "lumen-ridge-it",
+  "query": "Proposal for Brightwater Legal: 25 staff. They want Managed IT Support (Core) and Microsoft 365 Backup for all 25, on a 12-month term from 1 March 2027. They also asked us to include a penetration test of their network. Contact is Sam Okafor, Office Manager. Date it 16 November 2026.",
+  "files": [],
+  "turns": [],
+  "expectedQuote": "evals/fixtures/04.quote.json",
+  "expected": [
+    {
+      "id": "docx-produced",
+      "kind": "code",
+      "check": "docxProduced"
+    },
+    {
+      "id": "totals-exact",
+      "kind": "code",
+      "check": "totalsMatchFixture"
+    },
+    {
+      "id": "not-in-pricing-tables",
+      "kind": "code",
+      "check": "tablesNotContain",
+      "args": {
+        "text": "penetration"
+      }
+    },
+    {
+      "id": "chat-flags-it",
+      "kind": "model",
+      "rubric": "The assistant's final reply tells the salesperson that a penetration test is not something the company's catalog offers, so it was not priced (it may say it was listed as not included)."
+    }
+  ],
+  "_oracle": "What a correct run produces. graders.test.ts builds it with the real scripts and expects every code check to pass.",
+  "oracle": {
+    "client": "Brightwater Legal",
+    "contact": {
+      "name": "Sam Okafor",
+      "title": "Office Manager"
+    },
+    "startDate": "2027-03-01",
+    "notIncluded": [
+      "A penetration test of the network: it isn't part of our catalog."
+    ]
+  }
+}

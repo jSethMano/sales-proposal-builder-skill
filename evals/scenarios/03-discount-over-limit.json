@@ -1,0 +1,52 @@
+{
+  "id": "03-discount-over-limit",
+  "title": "A 25% discount against a 15% limit gives a DRAFT naming the approver",
+  "requirement": "US-3",
+  "pack": "ironbark-msp",
+  "query": "Quote for Coastal Dental Group: 40 staff, Helpdesk and Support plus Cloud Backup for all 40, 36 months starting 1 February 2027. Contact is Priya Raman, Practice Manager. They've asked for 25% off the monthly services, so please put that in. Date it 16 November 2026.",
+  "files": [],
+  "turns": [],
+  "expectedQuote": "evals/fixtures/03.quote.json",
+  "expected": [
+    {
+      "id": "docx-produced",
+      "kind": "code",
+      "check": "docxProduced"
+    },
+    {
+      "id": "marked-draft",
+      "kind": "code",
+      "check": "docxContains",
+      "args": {
+        "text": "DRAFT"
+      }
+    },
+    {
+      "id": "approver-named",
+      "kind": "code",
+      "check": "docxContains",
+      "args": {
+        "text": "Operations Director"
+      }
+    },
+    {
+      "id": "totals-exact",
+      "kind": "code",
+      "check": "totalsMatchFixture"
+    },
+    {
+      "id": "chat-explains",
+      "kind": "model",
+      "rubric": "The assistant's final reply tells the salesperson that the proposal is a draft that needs approval, names the Operations Director as the approver, and gives the reason: the requested 25% discount is above the 15% limit."
+    }
+  ],
+  "_oracle": "What a correct run produces. graders.test.ts builds it with the real scripts and expects every code check to pass.",
+  "oracle": {
+    "client": "Coastal Dental Group",
+    "contact": {
+      "name": "Priya Raman",
+      "title": "Practice Manager"
+    },
+    "startDate": "2027-02-01"
+  }
+}

@@ -8,6 +8,7 @@ import { parseCaseStudies } from "./case-studies.cjs";
 import { at, Checker, type Fields } from "./check.cjs";
 import { Problems, ScriptError, sha256 } from "./cli.cjs";
 import { readImageHeader } from "./image.cjs";
+import { parseMarkdown } from "./markdown.cjs";
 import { currencyMinorUnits, isCurrencyCode } from "./money.cjs";
 import type {
   AllowedFont,
@@ -87,6 +88,9 @@ export function loadPack(dir: string): Pack {
   const terms = readPackText(abs, "terms.md", problems);
   if (terms !== undefined && terms.trim() === "") {
     problems.add("E_PACK_TERMS", "terms.md", "terms.md is empty.", "Add the company's standard terms; they are rendered verbatim.");
+  }
+  for (const issue of terms === undefined ? [] : parseMarkdown(terms).issues) {
+    problems.add("E_PACK_TERMS", `terms.md:${issue.line}`, issue.message, issue.hint);
   }
   const logo = brand?.logo ? checkLogo(abs, brand, problems) : null;
 

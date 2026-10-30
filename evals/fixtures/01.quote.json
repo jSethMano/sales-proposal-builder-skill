@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "quoteDate": "2026-11-16",
+  "termMonths": 24,
+  "lines": [
+    { "sku": "LR-SUPPORT-CORE", "quantity": 80 },
+    { "sku": "LR-M365-BACKUP", "quantity": 80 },
+    { "sku": "LR-ONBOARDING", "quantity": 1 },
+    { "sku": "LR-M365-MIGRATION", "quantity": 80 }
+  ]
+}
