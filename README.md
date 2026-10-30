@@ -114,13 +114,7 @@ The skill reaches everyone at once and is on by default. People see it under Cus
 
 **Claude API.** Upload the zip with `POST /v1/skills`, then attach it to a request with `container.skills` and the code execution tool. `evals/harness/skills.ts` does this.
 
-**Updating.**
-1. Change the pack or the core.
-2. Run the tests (CI does this on every push).
-3. Bump the version in `package.json` and `src/skill/lib/version.cts`, and note the change in `CHANGELOG.md`.
-4. Package, and have an admin upload the new zip.
-
-The help article doesn't describe replacing a provisioned skill in place, so check Inventory for a duplicate afterwards. Through the API, a new zip becomes a new version of the same skill.
+**Updating.** Changes go through pull requests, with owners for each part (pricing, terms, brand, the core), CI, and evals for changes to what Claude reads. A tag then publishes a GitHub Release with the zips for an admin to upload. See [`docs/change-management.md`](docs/change-management.md).
 
 **Data.** Client details go into Claude, so use a plan whose data terms fit the company's obligations.
 
@@ -145,6 +139,8 @@ The help article doesn't describe replacing a provisioned skill in place, so che
   Each runs on Haiku, Sonnet and Opus, with and without the skill, through the Claude API. Grading uses code checks on the returned `.docx` plus a judge model for chat behavior. The graders are tested in CI against correct documents built by the real scripts. See [`evals/README.md`](evals/README.md).
   **The eval runs haven't happened yet**, because they need an API key. [`evals/RESULTS.md`](evals/RESULTS.md) will hold them.
 - **CI** (`.github/workflows/ci.yml`) type-checks, verifies that the committed scripts match their source, runs the tests, and uploads the three zips as an artifact on every push.
+- **Releases** (`release.yml`): pushing a `vX.Y.Z` tag runs everything again and publishes a GitHub Release with one zip per pack and a `SHA256SUMS` file.
+- **Evals in Actions** (`evals.yml`): started by hand with a budget, with the API key in a protected environment.
 
 ## Repository
 
@@ -176,7 +172,8 @@ This needs Node 22.18 or later. The skill's scripts depend only on Node and the 
 | Proposal format and validation | Done |
 | Branded `.docx` and leakage tests | Done |
 | `SKILL.md`, references, packaging, eval harness | Done |
-| CI, README, demo screenshots | Done. CI was simulated locally (clean copy, `npm ci`, UTC); its first GitHub run happens on push |
+| CI, README, demo screenshots | Done. [CI passes on GitHub](https://github.com/jSethMano/sales-proposal-builder-skill/actions) |
+| Change management: code owners, PR template, release and eval workflows | Done. The release and eval workflows haven't run yet |
 | M0 runtime probe in claude.ai and the API container | **Pending:** needs an upload and an API key ([`docs/runtime.md`](docs/runtime.md)). Until then the `docx` version is pinned provisionally |
 | Eval runs on three models, and the manual claude.ai pass | **Pending** |
 | `render.cjs` (Claude checks pages visually in the sandbox), PDF output | After v1 |
@@ -187,4 +184,5 @@ This needs Node 22.18 or later. The skill's scripts depend only on Node and the 
 - [`docs/requirements.md`](docs/requirements.md): goals, requirements and decisions.
 - [`docs/design.md`](docs/design.md): architecture, formats, rules and the eval design, with notes on what changed during the build.
 - [`docs/runtime.md`](docs/runtime.md): sandbox findings.
+- [`docs/change-management.md`](docs/change-management.md): how changes are owned, reviewed, released, rolled out and rolled back.
 - [`CHANGELOG.md`](CHANGELOG.md).

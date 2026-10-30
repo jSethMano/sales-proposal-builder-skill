@@ -1,0 +1,68 @@
+# Runs the evals on demand (FR-24): they call the Claude API and cost money, so they never run on
+# every push. Start it from the Actions tab: "Evals" → "Run workflow".
+# The API key lives in the "evals" environment, which can require a reviewer's approval before
+# any run spends money (Settings → Environments → evals).
+name: Evals
+
+on:
+  workflow_dispatch:
+    inputs:
+      budget_usd:
+        description: "Stop starting new cases past this many US dollars"
+        required: true
+        default: "2"
+      models:
+        description: "Comma-separated: haiku, sonnet, opus"
+        required: true
+        default: "haiku"
+      scenarios:
+        description: "Scenario prefixes, e.g. 01,03 (empty = all)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    environment: evals
+    # The harness's own limit is 15 minutes per case; this catches anything stuck beyond that.
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Run the evals
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Inputs go through the environment, never straight into the script, so a crafted
+          # input can't inject shell commands.
+          BUDGET: ${{ inputs.budget_usd }}
+          MODELS: ${{ inputs.models }}
+          SCENARIOS: ${{ inputs.scenarios }}
+        run: |
+          args=(--budget-usd "$BUDGET" --models "$MODELS")
+          if [ -n "$SCENARIOS" ]; then args+=(--scenarios "$SCENARIOS"); fi
+          npm run evals -- "${args[@]}"
+
+      - name: Summary
+        if: always()
+        run: cat evals/RESULTS.md >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: eval-run-${{ github.run_id }}
+          # The run's config, results, transcripts and returned documents. Commit the config.json
+          # and results.jsonl you want to keep, then run npm run evals -- --report-only.
+          path: |
+            evals/runs/
+            evals/RESULTS.md
+          if-no-files-found: warn

@@ -30,16 +30,26 @@ export async function ensureSkill(client: Anthropic, zip: PackageResult): Promis
 
   const file = await toFile(createReadStream(zip.path), "sales-proposal-builder.zip");
   let pinned: PinnedSkill;
-  const existing = manifest.skills[zip.name];
+  const displayName = `sales-proposal-builder eval (${zip.name})`;
+  // CI starts without the manifest, so look the pack's skill up by name before creating a
+  // duplicate; each run then adds a version to the same skill.
+  const existing = manifest.skills[zip.name] ?? (await findSkill(client, displayName));
   if (existing) {
     const version = await client.skills.versions.create(existing, { files: [file] });
     pinned = { skillId: existing, versionId: version.id };
   } else {
-    const skill = await client.skills.create({ files: [file], display_name: `sales-proposal-builder eval (${zip.name})` });
+    const skill = await client.skills.create({ files: [file], display_name: displayName });
     pinned = { skillId: skill.id, versionId: skill.latest_version_id };
-    manifest.skills[zip.name] = skill.id;
   }
+  manifest.skills[zip.name] = pinned.skillId;
   manifest.versions[zip.sha256] = { pack: zip.name, ...pinned, uploadedAt: new Date().toISOString() };
   writeFileSync(MANIFEST, `${JSON.stringify(manifest, null, 2)}\n`);
   return pinned;
+}
+
+async function findSkill(client: Anthropic, displayName: string): Promise<string | undefined> {
+  for await (const skill of client.skills.list({ source: "custom" })) {
+    if (skill.display_name === displayName) return skill.id;
+  }
+  return undefined;
 }
