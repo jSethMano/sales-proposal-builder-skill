@@ -1,6 +1,6 @@
 {
   "name": "sales-proposal-builder",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "A white-label Claude Skill that turns a client brief into a branded IT services proposal (.docx).",
   "type": "module",

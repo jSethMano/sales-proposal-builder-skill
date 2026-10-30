@@ -73,7 +73,7 @@ flowchart LR
 
 Every script prints one JSON result, with errors Claude can act on. For example: `SKU 'LR-M365-MIGR' not in catalog. Closest: LR-M365-MIGRATION`, or `Unknown token {{pricing.total}}. Did you mean {{pricing.termTotal}}?`
 
-[`SKILL.md`](skill/sales-proposal-builder/SKILL.md) is 126 lines. Detail is in four reference files that Claude reads only when a step needs them, and the scripts are run, never read, so only their output costs context.
+[`SKILL.md`](skill/sales-proposal-builder/SKILL.md) is 133 lines. Detail is in four reference files that Claude reads only when a step needs them, and the scripts are run, never read, so only their output costs context.
 
 ## Company packs
 

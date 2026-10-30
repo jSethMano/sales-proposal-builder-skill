@@ -2,7 +2,14 @@
 
 All notable changes to the `sales-proposal-builder` skill. Versions follow [Semantic Versioning](https://semver.org/). The version lives in `package.json` and `src/skill/lib/version.cts`, and a test keeps them equal.
 
-## [Unreleased]
+## [0.1.1] - 2026-10-30
+
+### Changed
+- `SKILL.md` tells Claude to ask with clickable options where the interface has them (claude.ai's interactive questions, or a question tool): catalog items, term, currency, and whether to add a discount. Free-form details are still asked as one short list, and everything is plain text where there are no options.
+
+## [0.1.0] - 2026-10-30
+
+The first version uploaded to claude.ai.
 
 ### Changed
 - Investment tables leave out the Discounts column when nothing in the table is discounted.

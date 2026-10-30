@@ -63,6 +63,14 @@ Pass `--pack proposal-work/pack` to every script after that. Never write into th
 
 The proposal date is today unless the salesperson gives one. Ask for everything that's missing in one message. Don't ask again for what you were already told, and don't guess.
 
+**How to ask.** If your interface can show clickable options (such as claude.ai's interactive questions or a question tool), use them for anything with a fixed set of answers:
+- which catalog items they need: multi-select, offering only catalog item names;
+- the term: offer only the pack's offered terms, or 12, 24 and 36 months if it offers any term;
+- the currency, for an unconfigured pack: offer the likely ones plus "Other";
+- whether to add an extra discount: "No" or "Yes, I'll give the percentage".
+
+Never preselect an answer. Ask for free-form details as a short list in the same turn: names, contacts, quantities, prices, dates, the brand color and the logo. If your interface has no clickable options, ask everything as one short list.
+
 **4. Choose catalog items.** Map each need to a SKU. Anything with no match goes in `notIncluded`.
 
 **5. Price.** Write `proposal-work/<client>/quote.json` as described in [references/quoting.md](references/quoting.md), then run:
@@ -122,4 +130,4 @@ Never compute prices yourself, edit `pricing.json`, or build the document any ot
 - [references/proposal-structure.md](references/proposal-structure.md): what each section of the proposal says, and how long it is.
 - [references/writing-guide.md](references/writing-guide.md): voice, tokens instead of numbers, claims to avoid, and the markdown you can use.
 
-Skill version 0.1.0.
+Skill version 0.1.1.
